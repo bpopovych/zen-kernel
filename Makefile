@@ -1,6 +1,6 @@
 VERSION = 3
 PATCHLEVEL = 6
-SUBLEVEL = 1
+SUBLEVEL = 2
 EXTRAVERSION = -zen
 NAME = Fiddle-shaped Flounder
 
