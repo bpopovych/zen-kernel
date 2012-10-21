@@ -248,10 +248,11 @@ static struct bfq_group *bfq_find_alloc_group(struct bfq_data *bfqd,
 static void bfq_bfqq_move(struct bfq_data *bfqd, struct bfq_queue *bfqq,
 			  struct bfq_entity *entity, struct bfq_group *bfqg)
 {
-	int busy, resume;
+	int busy, resume, was_active;
 
 	busy = bfq_bfqq_busy(bfqq);
 	resume = !RB_EMPTY_ROOT(&bfqq->sort_list);
+	was_active = (bfqd->active_queue == bfqq);
 
 	BUG_ON(resume && !entity->on_st);
 	BUG_ON(busy && !resume && entity->on_st && bfqq != bfqd->active_queue);
@@ -276,6 +277,9 @@ static void bfq_bfqq_move(struct bfq_data *bfqd, struct bfq_queue *bfqq,
 
 	if (busy && resume)
 		bfq_activate_bfqq(bfqd, bfqq);
+
+	if (was_active && !bfqd->rq_in_driver)
+		bfq_schedule_dispatch(bfqd);
 }
 
 /**
