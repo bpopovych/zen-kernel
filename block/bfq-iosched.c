@@ -134,8 +134,6 @@ struct kmem_cache *bfq_pool;
 #define RQ_BIC(rq)		((struct bfq_io_cq *) (rq)->elv.priv[0])
 #define RQ_BFQQ(rq)		((rq)->elv.priv[1])
 
-static inline void bfq_schedule_dispatch(struct bfq_data *bfqd);
-
 #include "bfq-ioc.c"
 #include "bfq-sched.c"
 #include "bfq-cgroup.c"
